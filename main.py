@@ -3,24 +3,21 @@ import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 from skfuzzy.control.visualization import  FuzzyVariableVisualizer
 
-from PyQt5.QtWidgets import QApplication, QDialog
-
+from PyQt5.QtWidgets import *
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5 import uic
 
 import sys
-
 
 from matplotlib.backends.backend_qt5 import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import matplotlib.pyplot as plt
 
-from gui import Ui_Form
-
-class Fuzzy(QDialog):
+class Fuzzy(QMainWindow):
     def __init__(self):
         super(Fuzzy, self).__init__()
-        self.ui = Ui_Form()
-        self.ui.setupUi(self)
-#        loadUi('fuzzy_gui2.ui', self)
+        self.ui = uic.loadUi('gui.ui', self)
 
         self.vel_max = 85.5
         self.dis_max = 90.5
@@ -412,7 +409,8 @@ class Fuzzy(QDialog):
 if __name__ == "__main__":
 
     app = QApplication(sys.argv)
+    app.setStyle(QStyleFactory.create('Fusion'))
     Dialog = Fuzzy()
     Dialog.setWindowTitle("Braking Simulator 1.0")
-    Dialog.show()
+    Dialog.showMaximized()
     sys.exit(app.exec_())
