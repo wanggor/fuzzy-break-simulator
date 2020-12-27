@@ -19,6 +19,10 @@ class Fuzzy(QMainWindow):
         super(Fuzzy, self).__init__()
         self.ui = uic.loadUi('gui.ui', self)
 
+        self.velocity_membership = {
+            "very_low" : ""
+        }
+
         self.vel_max = 85.5
         self.dis_max = 90.5
         self.brake_max = 360.5
