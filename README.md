@@ -2,7 +2,7 @@
 
 Simulator for simple breaking system using Fuzzy logic.
 
-![](\image\capture.PNG?raw=true "Title")
+![](https://raw.githubusercontent.com/wanggor/fuzzy-break-simulator/main/image/capture.PNG?raw=true "Title")
 
 This simulator follows the following rules :
 
