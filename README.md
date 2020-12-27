@@ -2,7 +2,7 @@
 
 Simulator for simple breaking system using Fuzzy logic.
 
-![Alt text](image\capture.PNG?raw=true "Title")
+![](\image\capture.PNG?raw=true "Title")
 
 This simulator follows the following rules :
 
