@@ -5,6 +5,7 @@ Simulator for simple breaking system using Fuzzy logic.
 ![alt text](https://github.com/wanggor/fuzzy-break-simulator/blob/main/image/capture.PNG?raw=true)
 
 
+
 ## Installation
 
 Use the package manager [pip](https://pip.pypa.io/en/stable/) to install package/dependencies.
