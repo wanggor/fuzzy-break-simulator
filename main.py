@@ -98,6 +98,94 @@ class Fuzzy(QMainWindow):
             "very_high" :[self.ui.label_brake_13, self.ui.label_brake_14, self.ui.label_brake_15],
         }
 
+        self.rule_label = [
+            self.ui.rule_label_1,
+            self.ui.rule_label_2,
+            self.ui.rule_label_3,
+            self.ui.rule_label_4,
+            self.ui.rule_label_5,
+            self.ui.rule_label_6,
+            self.ui.rule_label_7,
+            self.ui.rule_label_8,
+            self.ui.rule_label_9,
+            self.ui.rule_label_10,
+            self.ui.rule_label_11,
+            self.ui.rule_label_12,
+            self.ui.rule_label_13,
+            self.ui.rule_label_14,
+            self.ui.rule_label_15,
+            self.ui.rule_label_16,
+            self.ui.rule_label_17,
+            self.ui.rule_label_18,
+            self.ui.rule_label_19,
+            self.ui.rule_label_20,
+            self.ui.rule_label_21,
+            self.ui.rule_label_22,
+            self.ui.rule_label_23,
+            self.ui.rule_label_24,
+            self.ui.rule_label_25,
+        ]
+
+        self.rule_comboBox = [
+            self.ui.cmb_1,
+            self.ui.cmb_2,
+            self.ui.cmb_3,
+            self.ui.cmb_4,
+            self.ui.cmb_5,
+            self.ui.cmb_6,
+            self.ui.cmb_7,
+            self.ui.cmb_8,
+            self.ui.cmb_9,
+            self.ui.cmb_10,
+            self.ui.cmb_11,
+            self.ui.cmb_12,
+            self.ui.cmb_13,
+            self.ui.cmb_14,
+            self.ui.cmb_15,
+            self.ui.cmb_16,
+            self.ui.cmb_17,
+            self.ui.cmb_18,
+            self.ui.cmb_19,
+            self.ui.cmb_20,
+            self.ui.cmb_21,
+            self.ui.cmb_22,
+            self.ui.cmb_23,
+            self.ui.cmb_24,
+            self.ui.cmb_25,
+        ]
+
+        self.rule = [
+            ["very_low", "very_low", "medium"],
+            ["very_low", "low", "low"],
+            ["very_low", "medium", "low"],
+            ["very_low", "high", "very_low"],
+            ["very_low", "very_high", "very_low"],
+
+            ["low", "very_low", "high"],
+            ["low", "low", "medium"],
+            ["low", "medium", "low"],
+            ["low", "high", "very_low"],
+            ["low", "very_high", "very_low"],
+
+            ["medium", "very_low", "very_high"],
+            ["medium", "low", "high"],
+            ["medium", "medium", "medium"],
+            ["medium", "high", "low"],
+            ["medium", "very_high", "very_low"],
+
+            ["high", "very_low", "very_high"],
+            ["high", "low", "high"],
+            ["high", "medium", "high"],
+            ["high", "high", "medium"],
+            ["high", "very_high", "low"],
+
+            ["very_high", "very_low", "very_high"],
+            ["very_high", "low", "very_high"],
+            ["very_high", "medium", "high"],
+            ["very_high", "high", "medium"],
+            ["very_high", "very_high", "low"],
+        ]
+
         # list all ui combonen (object name) - input max & min
         self.input_min_lis = [self.ui.line_vel_min, self.ui.line_dis_min, self.ui.line_brake_min]
         self.input_max_lis = [self.ui.line_vel_max, self.ui.line_dis_max, self.ui.line_brake_max]
@@ -105,6 +193,40 @@ class Fuzzy(QMainWindow):
         # input initial data to inputtext & label
         self.fill_input()
         self.fill_label()
+        self.fill_label_rule()
+        self.fill_comboBox_rule()
+
+    def change_brake_lavel_text(self, text):
+        if text == "very_low":
+            return "Very soft"
+        elif text == "low":
+            return "Soft"
+        elif text == "medium":
+            return "Medium"
+        elif text == "high":
+            return "Hard"
+        elif text == "very_high":
+            return "Very hard"
+
+    def change_brake_lavel_textInverse(self, text):
+        if text == "Very soft":
+            return "very_low"
+        elif text == "Soft":
+            return "low"
+        elif text == "Medium":
+            return "medium"
+        elif text == "Hard":
+            return "high"
+        elif text == "Very hard":
+            return "very_high"
+
+    def fill_label_rule(self):
+        for i in range(25):
+            self.rule_label[i].setText(self.change_brake_lavel_text(self.rule[i][2]))
+
+    def fill_comboBox_rule(self):
+        for i in range(25):
+            self.rule_comboBox[i].setCurrentText(self.change_brake_lavel_text(self.rule[i][2]))
 
     def fill_label(self):
         membership_range = [self.velocity_membership, self.distance_membership, self.brake_membership]
@@ -190,10 +312,16 @@ class Fuzzy(QMainWindow):
                         membership_range[index][level][0] = 0
                         membership_range[index][level][1] = 0
                         membership_range[index][level][2] = 0
+    
+    def get_comboBox_input(self):
+        for ind,cb in enumerate(self.rule_comboBox):
+            self.rule[ind][2] = self.change_brake_lavel_textInverse(cb.currentText())
 
     def deploy(self):
         self.get_value_input()
         self.fill_label()
+        self.get_comboBox_input()
+        self.fill_label_rule()
         
 
     def calculate(self):
@@ -230,39 +358,14 @@ class Fuzzy(QMainWindow):
         DECLARE THE RULES
         =============================
         """
-        rule1 = ctrl.Rule(velocity['very_low'] & distance['very_low'], brake['medium'])
-        rule2 = ctrl.Rule(velocity['very_low'] & distance['low'], brake['low'])
-        rule3 = ctrl.Rule(velocity['very_low'] & distance['medium'], brake['low'])
-        rule4 = ctrl.Rule(velocity['very_low'] & distance['high'], brake['very_low'])
-        rule5 = ctrl.Rule(velocity['very_low'] & distance['very_high'], brake['very_low'])
 
-        rule6 = ctrl.Rule(velocity['low'] & distance['very_low'], brake['high'])
-        rule7 = ctrl.Rule(velocity['low'] & distance['low'], brake['medium'])
-        rule8 = ctrl.Rule(velocity['low'] & distance['medium'], brake['low'])
-        rule9 = ctrl.Rule(velocity['low'] & distance['high'], brake['very_low'])
-        rule10 = ctrl.Rule(velocity['low'] & distance['very_high'], brake['very_low'])
+        all_rule = []
 
-        rule11 = ctrl.Rule(velocity['medium'] & distance['very_low'], brake['very_high'])
-        rule12 = ctrl.Rule(velocity['medium'] & distance['low'], brake['high'])
-        rule13 = ctrl.Rule(velocity['medium'] & distance['medium'], brake['medium'])
-        rule14 = ctrl.Rule(velocity['medium'] & distance['high'], brake['low'])
-        rule15 = ctrl.Rule(velocity['medium'] & distance['very_high'], brake['very_low'])
+        for (vel_rule, dis_rule, brake_rule) in self.rule:
+            all_rule.append(ctrl.Rule(velocity[vel_rule] & distance[dis_rule], brake[brake_rule]))
 
-        rule16 = ctrl.Rule(velocity['high'] & distance['very_low'], brake['very_high'])
-        rule17 = ctrl.Rule(velocity['high'] & distance['low'], brake['high'])
-        rule18 = ctrl.Rule(velocity['high'] & distance['medium'], brake['high'])
-        rule19 = ctrl.Rule(velocity['high'] & distance['high'], brake['medium'])
-        rule20 = ctrl.Rule(velocity['high'] & distance['very_high'], brake['low'])
-
-        rule21 = ctrl.Rule(velocity['very_high'] & distance['very_low'], brake['very_high'])
-        rule22 = ctrl.Rule(velocity['very_high'] & distance['low'], brake['very_high'])
-        rule23 = ctrl.Rule(velocity['very_high'] & distance['medium'], brake['high'])
-        rule24 = ctrl.Rule(velocity['very_high'] & distance['high'], brake['medium'])
-        rule25 = ctrl.Rule(velocity['very_high'] & distance['very_high'], brake['low'])
-
-        brake_ctrl = ctrl.ControlSystem(
-            [rule1, rule2, rule3, rule4, rule5, rule6, rule7, rule8, rule9, rule10, rule11, rule12, rule13, rule14, rule15, rule16, rule17, rule18, 
-            rule19, rule20, rule21, rule22, rule23, rule24, rule25])
+        brake_ctrl = ctrl.ControlSystem(all_rule)
+       
 
         """
         =============================
@@ -326,7 +429,7 @@ class Fuzzy(QMainWindow):
         self.toolbar4 = NavigationToolbar(self.ui.canvas4, self)
         
         self.ui.ver_lay1_2.addWidget(self.ui.canvas4)
-        self.ui.verticalLayout_8.addWidget(self.toolbar4)
+        # self.ui.verticalLayout_8.addWidget(self.toolbar4)
         
         brake = None
         braking = None
