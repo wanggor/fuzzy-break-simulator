@@ -4,37 +4,6 @@ Simulator for simple breaking system using Fuzzy logic.
 
 ![alt text](https://github.com/wanggor/fuzzy-break-simulator/blob/main/image/capture.PNG?raw=true)
 
-This simulator follows the following rules :
-
-| Velocity | Distance | Braking Force |
-| :---         |     :---      |          :--- |
-| very_low   | very_low     | medium    |
-| very_low     | low       | low      |
-| very_low     | medium       | low      |
-| very_low     | high       | very_low      |
-| very_low     | very_high       | very_low      |
-| low     | very_low       | high      |
-| low     | low       | medium      |
-| low     | medium       | low      |
-| low     | high       | very_low      |
-| low     | very_high       | very_low      |
-| medium     | very_low       | very_high      |
-| medium     | low       | high      |
-| medium     | medium       | medium      |
-| medium     | high       | low      |
-| medium     | very_high       | very_low      |
-| high     | very_low       | very_high      |
-| high     | low       | high      |
-| high     | medium       | high      |
-| high     | high       | medium      |
-| high     | very_high       | low      |
-| very_high     | very_low       | very_high      |
-| very_high     | low       | very_high      |
-| very_high     | medium       | high      |
-| very_high     | high       | medium      |
-| very_high     | very_high       | low      |
-
-<br/>
 
 ## Installation
 
